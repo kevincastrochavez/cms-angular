@@ -1,1 +1,27 @@
-<p>contact-list works!</p>
+<div class="row navbar-default">
+  <div class="col-xs-12 navbar-header">
+    <h2 class="pull-left">Contacts</h2>
+    <button class="btn btn-success navbar-right pull-right">New Contact</button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <a
+      href="#"
+      class="list-group-item clearfix"
+      *ngFor="let contact of contacts"
+    >
+      <div class="pull-left">
+        <h4 class="list-group-item-headeing">{{ contact.name }}</h4>
+      </div>
+
+      <span class="pull-right">
+        <img
+          class="img-responsive"
+          [src]="contact.imageUrl"
+          style="max-height: 50px"
+        />
+      </span>
+    </a>
+  </div>
+</div>
