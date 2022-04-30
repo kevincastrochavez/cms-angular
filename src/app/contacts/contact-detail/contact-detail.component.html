@@ -1,1 +1,22 @@
-<p>contact-detail works!</p>
+<div class="row">
+  <div class="col-xs-12 container-fluid">
+    <div class="col-xs-12">
+      <h2 class="col-xs-12">{{ contact.name }}</h2>
+      <img
+        [src]="contact.imageUrl"
+        alt="contact.name"
+        class="img-responsive pull-left"
+        style="max-height: 100px"
+      />
+      <div class="pull-right">
+        <button class="btn btn-primary">Edit</button>
+        <button class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+
+    <div class="colo-xs-12">
+      <h4>Email: {{ contact.email }}</h4>
+      <h4>Password: {{ contact.phone }}</h4>
+    </div>
+  </div>
+</div>
