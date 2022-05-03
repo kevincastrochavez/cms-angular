@@ -1,3 +1,8 @@
 h2 {
   margin-top: 10px;
 }
+
+.padding-fixed {
+  padding-left: 0;
+  padding-right: 0;
+}
