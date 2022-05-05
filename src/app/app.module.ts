@@ -6,9 +6,10 @@ import { ContactsComponent } from './contacts/contacts.component';
 import { HeaderComponent } from './header/header.component';
 import { ContactListComponent } from './contacts/contact-list/contact-list.component';
 import { ContactDetailComponent } from './contacts/contact-detail/contact-detail.component';
+import { ContactItemComponent } from './contacts/contact-item/contact-item.component';
 
 @NgModule({
-  declarations: [AppComponent, ContactsComponent, HeaderComponent, ContactListComponent, ContactDetailComponent],
+  declarations: [AppComponent, ContactsComponent, HeaderComponent, ContactListComponent, ContactDetailComponent, ContactItemComponent],
   imports: [BrowserModule],
   providers: [],
   bootstrap: [AppComponent],
