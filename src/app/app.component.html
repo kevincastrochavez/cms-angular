@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-12">
     <app-header (selectedFeatureEvent)="switchView($event)"></app-header>
-    <div class="container pull-left">
+    <div class="container">
       <app-documents *ngIf="selectedFeature === 'documents'"></app-documents>
       <app-message-list
         *ngIf="selectedFeature === 'messages'"
