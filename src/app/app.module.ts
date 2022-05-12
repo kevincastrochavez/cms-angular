@@ -15,9 +15,26 @@ import { MessagesComponent } from './messages/messages.component';
 import { MessageItemComponent } from './messages/message-item/message-item.component';
 import { MessageEditComponent } from './messages/message-edit/message-edit.component';
 import { MessageListComponent } from './messages/message-list/message-list.component';
+import { DropdownDirective } from './dropdown.directive';
 
 @NgModule({
-  declarations: [AppComponent, ContactsComponent, HeaderComponent, ContactListComponent, ContactDetailComponent, ContactItemComponent, DocumentsComponent, DocumentListComponent, DocumentItemComponent, DocumentDetailComponent, MessagesComponent, MessageItemComponent, MessageEditComponent, MessageListComponent],
+  declarations: [
+    AppComponent,
+    ContactsComponent,
+    HeaderComponent,
+    ContactListComponent,
+    ContactDetailComponent,
+    ContactItemComponent,
+    DocumentsComponent,
+    DocumentListComponent,
+    DocumentItemComponent,
+    DocumentDetailComponent,
+    MessagesComponent,
+    MessageItemComponent,
+    MessageEditComponent,
+    MessageListComponent,
+    DropdownDirective,
+  ],
   imports: [BrowserModule],
   providers: [],
   bootstrap: [AppComponent],
