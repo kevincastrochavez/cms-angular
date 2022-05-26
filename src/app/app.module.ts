@@ -18,6 +18,7 @@ import { MessageListComponent } from './messages/message-list/message-list.compo
 import { DropdownDirective } from './dropdown.directive';
 import { ContactService } from './contacts/contact.service';
 import { AppRoutingModule } from './app-routing.module';
+import { DocumentEditComponent } from './documents/document-edit/document-edit.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { AppRoutingModule } from './app-routing.module';
     MessageEditComponent,
     MessageListComponent,
     DropdownDirective,
+    DocumentEditComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [ContactService],
