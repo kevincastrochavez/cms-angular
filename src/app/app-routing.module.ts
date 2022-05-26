@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ContactsComponent } from './contacts/contacts.component';
 import { DocumentsComponent } from './documents/documents.component';
-import { MessagesComponent } from './messages/messages.component';
+import { MessageListComponent } from './messages/message-list/message-list.component';
 
 const appRoutes: Routes = [
   {
@@ -17,7 +17,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'messages',
-    component: MessagesComponent,
+    component: MessageListComponent,
   },
   {
     path: 'contacts',
