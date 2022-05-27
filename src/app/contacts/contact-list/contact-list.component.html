@@ -2,7 +2,10 @@
   <div class="row list-group-item padding-fixed">
     <div class="col-xs-12 container">
       <h2 class="pull-left col-xs-6 center-block">Contacts</h2>
-      <button class="btn btn-success pull-right col-xs-4 center-block">
+      <button
+        routerLink="new"
+        class="btn btn-success pull-right col-xs-4 center-block"
+      >
         New Contact
       </button>
     </div>
@@ -11,7 +14,6 @@
       <app-contact-item
         *ngFor="let contactEl of contacts"
         [contact]="contactEl"
-        (click)="onSelected(contactEl)"
       ></app-contact-item>
     </div>
   </div>
