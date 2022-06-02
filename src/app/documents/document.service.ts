@@ -55,4 +55,15 @@ export class DocumentService {
 
     return maxId;
   }
+
+  addDocument(newDocument: Document) {
+    if (!newDocument) return;
+
+    this.maxDocumentId++;
+    newDocument.id = String(this.maxDocumentId);
+    this.documents.push(newDocument);
+
+    const documentsListClone = this.documents.slice();
+    this.documentListChangedEvent.next(documentsListClone);
+  }
 }
