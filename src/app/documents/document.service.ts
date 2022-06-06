@@ -10,7 +10,6 @@ import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
 export class DocumentService {
   documentListChangedEvent = new Subject<Document[]>();
   documentSelectedEvent = new EventEmitter<Document>();
-  // documentChangedEvent = new EventEmitter<Document[]>();
   documents: Document[];
   maxDocumentId: number;
 
@@ -39,7 +38,6 @@ export class DocumentService {
 
     this.documents.splice(pos, 1);
     this.documentListChangedEvent.next(this.documents.slice());
-    // this.documentChangedEvent.emit(this.documents.slice());
   }
 
   getMaxId(): number {
