@@ -83,12 +83,7 @@
                   class="col-sm-11"
                   [contact]="contact"
                 ></app-contact-item>
-                <button
-                  class="btn btn-danger col-sm-2 deleteButton"
-                  (click)="onRemoveItem(i)"
-                >
-                  X
-                </button>
+                <button class="btn btn-danger col-sm-2 deleteButton">X</button>
               </div>
             </div>
             <span class="dragMsg" *ngIf="groupContacts?.length < 1"
