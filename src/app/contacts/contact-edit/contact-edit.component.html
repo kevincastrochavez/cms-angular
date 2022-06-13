@@ -78,14 +78,26 @@
         <div class="form-group">
           <label for="groupList">Group Contacts:</label>
 
-          <div class="row" id="groupList" style="min-height: 3rem">
+          <div
+            class="row"
+            id="groupList"
+            style="min-height: 3rem"
+            dnd-droppable
+            [dropZones]="['contactGroup']"
+            (onDropSuccess)="addToGroup($event)"
+          >
             <div *ngFor="let contact of groupContacts; let i = index">
               <div>
                 <app-contact-item
                   class="col-sm-11"
                   [contact]="contact"
                 ></app-contact-item>
-                <button class="btn btn-danger col-sm-2 deleteButton">X</button>
+                <button
+                  class="btn btn-danger col-sm-2 deleteButton"
+                  (click)="onRemoveItem(i)"
+                >
+                  X
+                </button>
               </div>
             </div>
             <span class="dragMsg" *ngIf="groupContacts?.length < 1"
