@@ -5,7 +5,7 @@
         <h2 class="col-xs-12">{{ contact.name }}</h2>
         <img
           [src]="contact.imageUrl"
-          alt="contact.name"
+          [alt]="contact.name"
           class="img-responsive pull-left img-rounded"
           style="max-height: 100px"
         />
@@ -15,9 +15,16 @@
         </div>
       </div>
 
-      <div class="colo-xs-12 list-group-item detail-fixed panel-body">
+      <div class="col-xs-12 list-group-item detail-fixed panel-body">
         <h4>Email: {{ contact.email }}</h4>
         <h4>Password: {{ contact.phone }}</h4>
+
+        <div class="col-xs-12">
+          <app-contact-item
+            *ngFor="let contact of groupContacts"
+            [contact]="contact"
+          ></app-contact-item>
+        </div>
       </div>
     </div>
   </div>

@@ -12,6 +12,7 @@ import { ContactService } from '../contact.service';
 export class ContactDetailComponent implements OnInit {
   @Input() contact: Contact;
   id: string;
+  groupContacts: Contact[];
 
   constructor(
     private contactService: ContactService,
@@ -23,6 +24,8 @@ export class ContactDetailComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.id = params['id'];
       this.contact = this.contactService.getContact(this.id);
+
+      this.groupContacts = this.contact.group;
     });
   }
 
