@@ -19,24 +19,28 @@ export class ContactEditComponent implements OnInit {
 
   constructor(
     private contactService: ContactService,
-    private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.id = params['id'];
 
-      if (!this.id) this.editMode = false;
+      if (!this.id) {
+        this.editMode = false;
+        return;
+      }
 
       this.originalContact = this.contactService.getContact(this.id);
 
-      if (!this.originalContact) return;
-
+      if (!this.originalContact) {
+        return;
+      }
       this.editMode = true;
       this.contact = JSON.parse(JSON.stringify(this.originalContact));
 
-      if (this.groupContacts) {
+      if (this.groupContacts.length > 0) {
         this.groupContacts = JSON.parse(
           JSON.stringify(this.originalContact.group)
         );
@@ -73,9 +77,11 @@ export class ContactEditComponent implements OnInit {
 
     if (this.contact && newContact.id === this.contact.id) return true;
 
-    for (let i = 0; i < this.groupContacts.length; i++) {
-      if (newContact.id === this.groupContacts[i].id) {
-        return true;
+    if (this.groupContacts) {
+      for (let i = 0; i < this.groupContacts.length; i++) {
+        if (newContact.id === this.groupContacts[i].id) {
+          return true;
+        }
       }
     }
 
@@ -84,7 +90,9 @@ export class ContactEditComponent implements OnInit {
 
   addToGroup($event: any) {
     const selectedContact: Contact = $event.dragData;
+
     const invalidGroupContact = this.isInvalidContact(selectedContact);
+    console.log(invalidGroupContact);
 
     if (invalidGroupContact) return;
 
