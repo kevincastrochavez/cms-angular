@@ -11,6 +11,7 @@ import { ContactService } from '../contact.service';
   styleUrls: ['./contact-edit.component.css'],
 })
 export class ContactEditComponent implements OnInit {
+  invalidContact: boolean = false;
   groupContacts: Contact[] = [];
   originalContact: Contact;
   editMode: boolean;
@@ -73,17 +74,29 @@ export class ContactEditComponent implements OnInit {
   }
 
   isInvalidContact(newContact: Contact) {
-    if (!newContact) return true;
+    if (!newContact) {
+      this.invalidContact = true;
 
-    if (this.contact && newContact.id === this.contact.id) return true;
+      return true;
+    }
+
+    if (this.contact && newContact.id === this.contact.id) {
+      this.invalidContact = true;
+
+      return true;
+    }
 
     if (this.groupContacts) {
       for (let i = 0; i < this.groupContacts.length; i++) {
         if (newContact.id === this.groupContacts[i].id) {
+          this.invalidContact = true;
+
           return true;
         }
       }
     }
+
+    this.invalidContact = false;
 
     return false;
   }
@@ -92,7 +105,7 @@ export class ContactEditComponent implements OnInit {
     const selectedContact: Contact = $event.dragData;
 
     const invalidGroupContact = this.isInvalidContact(selectedContact);
-    console.log(invalidGroupContact);
+    console.log(this.invalidContact);
 
     if (invalidGroupContact) return;
 
