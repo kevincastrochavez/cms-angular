@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
@@ -13,13 +14,30 @@ export class ContactService {
   private contacts: Contact[] = [];
   maxContactId: number;
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.contacts = MOCKCONTACTS;
     this.maxContactId = this.getMaxId();
   }
 
-  getContacts(): Contact[] {
-    return this.contacts.slice();
+  getContacts() {
+    this.http
+      .get<Contact[]>(
+        'https://cms-angular-2f945-default-rtdb.firebaseio.com/contacts.json'
+      )
+      .subscribe(
+        (contacts: Contact[]) => {
+          this.contacts = contacts;
+          this.maxContactId = this.getMaxId();
+
+          this.contacts.sort((a, b) =>
+            a.name > b.name ? 1 : a.name < b.name ? -1 : 0
+          );
+          this.contactChangedEvent.next(this.contacts.slice());
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
   }
 
   getContact(id: string) {
