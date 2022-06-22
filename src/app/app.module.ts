@@ -22,6 +22,7 @@ import { ContactService } from './contacts/contact.service';
 import { AppRoutingModule } from './app-routing.module';
 import { DocumentEditComponent } from './documents/document-edit/document-edit.component';
 import { ContactEditComponent } from './contacts/contact-edit/contact-edit.component';
+import { ContactsFilterPipe } from './contacts/contacts-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { ContactEditComponent } from './contacts/contact-edit/contact-edit.compo
     DropdownDirective,
     DocumentEditComponent,
     ContactEditComponent,
+    ContactsFilterPipe,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, DndModule.forRoot()],
   providers: [ContactService],

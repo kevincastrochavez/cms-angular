@@ -2,17 +2,35 @@
   <div class="row list-group-item padding-fixed">
     <div class="col-xs-12 container">
       <h2 class="pull-left col-xs-6 center-block">Contacts</h2>
-      <button
-        routerLink="new"
-        class="btn btn-success pull-right col-xs-4 center-block"
-      >
-        New Contact
-      </button>
+      <div class="panel-heading">
+        <div class="row">
+          <span class="title pad-left-right">Contacts</span>
+        </div>
+        <div class="row">
+          <div class="input-group pull-left pad-left-right col-xs-7">
+            <input
+              type="text"
+              placeholder="Search"
+              #searchBox
+              (keyup)="search(searchBox.value)"
+              class="form-control"
+            />
+
+            <div
+              class="glyphicon glyphicon-search input-group-addon"
+              (click)="search(searchBox.value)"
+            ></div>
+          </div>
+        </div>
+        <div class="pull-right pad-left-right">
+          <a class="btn btn-success" [routerLink]="['new']">New Contact</a>
+        </div>
+      </div>
     </div>
 
     <div class="col-xs-12">
       <app-contact-item
-        *ngFor="let contactEl of contacts"
+        *ngFor="let contactEl of contacts | contactsFilter: term"
         [contact]="contactEl"
         dnd-draggable
         [dragEnabled]="true"
