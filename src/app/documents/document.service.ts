@@ -39,6 +39,21 @@ export class DocumentService {
       );
   }
 
+  storeDocuments() {
+    const documents = JSON.stringify(this.documents);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    this.http
+      .put(
+        'https://cms-angular-2f945-default-rtdb.firebaseio.com/documents.json',
+        documents,
+        { headers: headers }
+      )
+      .subscribe(() => {
+        this.documentListChangedEvent.next(this.documents.slice());
+      });
+  }
+
   getDocument(id: string) {
     return this.documents.find((document) => document.id === id);
   }
@@ -54,7 +69,8 @@ export class DocumentService {
     }
 
     this.documents.splice(pos, 1);
-    this.documentListChangedEvent.next(this.documents.slice());
+    // this.documentListChangedEvent.next(this.documents.slice());
+    this.storeDocuments();
   }
 
   getMaxId(): number {
@@ -78,8 +94,9 @@ export class DocumentService {
     newDocument.id = String(this.maxDocumentId);
     this.documents.push(newDocument);
 
-    const documentsListClone = this.documents.slice();
-    this.documentListChangedEvent.next(documentsListClone);
+    // const documentsListClone = this.documents.slice();
+    // this.documentListChangedEvent.next(documentsListClone);
+    this.storeDocuments();
   }
 
   updateDocument(originalDocument: Document, newDocument: Document) {
@@ -92,7 +109,8 @@ export class DocumentService {
     newDocument.id = originalDocument.id;
     this.documents[position] = newDocument;
 
-    const documentsListClone = this.documents.slice();
-    this.documentListChangedEvent.next(documentsListClone);
+    // const documentsListClone = this.documents.slice();
+    // this.documentListChangedEvent.next(documentsListClone);
+    this.storeDocuments();
   }
 }
