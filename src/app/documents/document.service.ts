@@ -31,6 +31,7 @@ export class DocumentService {
           this.documents.sort((a, b) =>
             a.name > b.name ? 1 : a.name < b.name ? -1 : 0
           );
+
           this.documentListChangedEvent.next(this.documents.slice());
         },
         (error: any) => {
