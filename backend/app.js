@@ -2,13 +2,21 @@ const express = require("express");
 
 const app = express();
 
-app.use((req, res, next) => {
-  console.log("First");
-  next();
-});
+app.use("/api/posts", (req, res, next) => {
+  const posts = [
+    {
+      id: "jkanksjda",
+      title: "First server",
+      content: "This is coming from the server",
+    },
+    {
+      id: "lnbkajbsdas",
+      title: "Second server",
+      content: "This is coming from the second server",
+    },
+  ];
 
-app.use((req, res, next) => {
-  res.send("Hello from express");
+  return res.status(200).json({ posts: posts });
 });
 
 module.exports = app;
