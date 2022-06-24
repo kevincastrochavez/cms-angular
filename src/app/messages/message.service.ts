@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { MOCKMESSAGES } from './MOCKMESSAGES';
 import { Message } from './message.model';
@@ -48,12 +48,28 @@ export class MessageService {
       );
   }
 
+  storeMessages() {
+    const messages = JSON.stringify(this.messages);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    this.http
+      .put(
+        'https://cms-angular-2f945-default-rtdb.firebaseio.com/messages.json',
+        messages,
+        { headers: headers }
+      )
+      .subscribe(() => {
+        this.messageChangedEvent.next(this.messages.slice());
+      });
+  }
+
   getMessage(id: string) {
     return this.messages.find((message) => message.id === id);
   }
 
   addMessage(message: Message) {
     this.messages.push(message);
-    this.messageChangedEvent.emit(this.messages.slice());
+
+    this.storeMessages();
   }
 }
