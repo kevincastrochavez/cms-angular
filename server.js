@@ -4,6 +4,9 @@ var path = require("path");
 var http = require("http");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+var mongoose = require("mongoose");
+const dotenv = require("dotenv");
+dotenv.config();
 
 // import the routing file to handle the default (index) route
 var index = require("./server/routes/app");
@@ -11,7 +14,18 @@ const messageRoutes = require("./server/routes/messages");
 const contactRoutes = require("./server/routes/contacts");
 const documentRoutes = require("./server/routes/documents");
 
-// ... ADD CODE TO IMPORT YOUR ROUTING FILES HERE ...
+// establish a connection to the mongo database
+mongoose.connect(
+  process.env.MONGODB_URI,
+  { useNewUrlParser: true },
+  (err, res) => {
+    if (err) {
+      console.log("Connection failed: " + err);
+    } else {
+      console.log("Connected to database!");
+    }
+  }
+);
 
 var app = express(); // create an instance of express
 
