@@ -7,10 +7,7 @@ const Document = require("../models/document");
 router.get("/", (req, res, next) => {
   Document.find()
     .then((documents) => {
-      res.status(200).json({
-        message: "Documents fetched successfully!",
-        documents: documents,
-      });
+      res.status(200).json(documents);
     })
     .catch((error) => {
       res.status(500).json({

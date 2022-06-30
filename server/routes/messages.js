@@ -7,6 +7,7 @@ const Message = require("../models/message");
 router.get("/", (req, res, next) => {
   Message.find()
     .then((messages) => {
+      console.log(messages);
       res.status(200).json({
         message: "Messages fetched successfully!",
         messages: messages,

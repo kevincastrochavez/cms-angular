@@ -22,10 +22,13 @@ export class DocumentService {
   getDocuments() {
     this.http
       .get<Document[]>(
-        'https://cms-angular-2f945-default-rtdb.firebaseio.com/documents.json'
+        'http://localhost:3000/documents'
+        // 'https://cms-angular-2f945-default-rtdb.firebaseio.com/documents.json'
       )
       .subscribe(
         (documents: Document[]) => {
+          console.log(documents);
+
           this.documents = documents;
           this.maxDocumentId = this.getMaxId();
           this.documents.sort((a, b) =>
@@ -91,27 +94,45 @@ export class DocumentService {
   addDocument(newDocument: Document) {
     if (!newDocument) return;
 
-    this.maxDocumentId++;
-    newDocument.id = String(this.maxDocumentId);
-    this.documents.push(newDocument);
+    newDocument.id = '';
 
-    // const documentsListClone = this.documents.slice();
-    // this.documentListChangedEvent.next(documentsListClone);
-    this.storeDocuments();
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    this.http
+      .post<{ message: string; document: Document }>(
+        'http://localhost:3000/documents',
+        document,
+        { headers: headers }
+      )
+      .subscribe((responseData) => {
+        this.documents.push(responseData.document);
+        // this.sortAndSend();
+      });
   }
 
   updateDocument(originalDocument: Document, newDocument: Document) {
     if (!originalDocument || !newDocument) return;
 
-    const position = this.documents.indexOf(originalDocument);
+    const position = this.documents.findIndex(
+      (document) => document.id === originalDocument.id
+    );
 
     if (position < 0) return;
 
     newDocument.id = originalDocument.id;
-    this.documents[position] = newDocument;
+    // newDocument._id = originalDocument._id;
 
-    // const documentsListClone = this.documents.slice();
-    // this.documentListChangedEvent.next(documentsListClone);
-    this.storeDocuments();
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    this.http
+      .put(
+        'http://localhost:3000/documents/' + originalDocument.id,
+        newDocument,
+        { headers: headers }
+      )
+      .subscribe((response: Response) => {
+        this.documents[position] = newDocument;
+        // this.sortAndSend();
+      });
   }
 }
