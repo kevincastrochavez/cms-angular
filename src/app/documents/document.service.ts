@@ -67,14 +67,17 @@ export class DocumentService {
       return;
     }
 
-    const pos = this.documents.indexOf(document);
+    const pos = this.documents.findIndex((d) => d.id === document.id);
     if (pos < 0) {
       return;
     }
 
-    this.documents.splice(pos, 1);
-    // this.documentListChangedEvent.next(this.documents.slice());
-    this.storeDocuments();
+    this.http
+      .delete('http://localhost:3000/documents/' + document.id)
+      .subscribe((response: Response) => {
+        this.documents.splice(pos, 1);
+        // this.sortAndSend();
+      });
   }
 
   getMaxId(): number {
