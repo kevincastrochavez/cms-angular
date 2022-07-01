@@ -8,10 +8,7 @@ router.get("/", (req, res, next) => {
   Message.find()
     .then((messages) => {
       console.log(messages);
-      res.status(200).json({
-        message: "Messages fetched successfully!",
-        messages: messages,
-      });
+      res.status(200).json(messages);
     })
     .catch((error) => {
       res.status(500).json({

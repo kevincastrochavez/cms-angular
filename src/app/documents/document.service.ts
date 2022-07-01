@@ -20,27 +20,20 @@ export class DocumentService {
   }
 
   getDocuments() {
-    this.http
-      .get<Document[]>(
-        'http://localhost:3000/documents'
-        // 'https://cms-angular-2f945-default-rtdb.firebaseio.com/documents.json'
-      )
-      .subscribe(
-        (documents: Document[]) => {
-          console.log(documents);
+    this.http.get<Document[]>('http://localhost:3000/documents').subscribe(
+      (documents: Document[]) => {
+        this.documents = documents;
+        this.maxDocumentId = this.getMaxId();
+        this.documents.sort((a, b) =>
+          a.name > b.name ? 1 : a.name < b.name ? -1 : 0
+        );
 
-          this.documents = documents;
-          this.maxDocumentId = this.getMaxId();
-          this.documents.sort((a, b) =>
-            a.name > b.name ? 1 : a.name < b.name ? -1 : 0
-          );
-
-          this.documentListChangedEvent.next(this.documents.slice());
-        },
-        (error: any) => {
-          console.log(error);
-        }
-      );
+        this.documentListChangedEvent.next(this.documents.slice());
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
   }
 
   storeDocuments() {
@@ -48,11 +41,7 @@ export class DocumentService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     this.http
-      .put(
-        'https://cms-angular-2f945-default-rtdb.firebaseio.com/documents.json',
-        documents,
-        { headers: headers }
-      )
+      .put('http://localhost:3000/documents', documents, { headers: headers })
       .subscribe(() => {
         this.documentListChangedEvent.next(this.documents.slice());
       });
@@ -104,12 +93,11 @@ export class DocumentService {
     this.http
       .post<{ message: string; document: Document }>(
         'http://localhost:3000/documents',
-        document,
+        newDocument,
         { headers: headers }
       )
       .subscribe((responseData) => {
         this.documents.push(responseData.document);
-        // this.sortAndSend();
       });
   }
 

@@ -32,20 +32,17 @@ export class MessageService {
   }
 
   getMessages() {
-    this.http
-      .get<Message[]>(
-        'https://cms-angular-2f945-default-rtdb.firebaseio.com/messages.json'
-      )
-      .subscribe(
-        (messages: Message[]) => {
-          this.messages = messages;
-          this.maxMessageId = this.getMaxId();
-          this.messageChangedEvent.next(this.messages.slice());
-        },
-        (error: any) => {
-          console.log(error);
-        }
-      );
+    this.http.get<Message[]>('http://localhost:3000/messages').subscribe(
+      (messages: Message[]) => {
+        this.messages = messages;
+
+        this.maxMessageId = this.getMaxId();
+        this.messageChangedEvent.next(this.messages.slice());
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
   }
 
   storeMessages() {
@@ -53,11 +50,7 @@ export class MessageService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     this.http
-      .put(
-        'https://cms-angular-2f945-default-rtdb.firebaseio.com/messages.json',
-        messages,
-        { headers: headers }
-      )
+      .put('http://localhost:3000/messages', messages, { headers: headers })
       .subscribe(() => {
         this.messageChangedEvent.next(this.messages.slice());
       });
@@ -67,9 +60,24 @@ export class MessageService {
     return this.messages.find((message) => message.id === id);
   }
 
-  addMessage(message: Message) {
-    this.messages.push(message);
+  addMessage(newMessage: Message) {
+    console.log('Hi');
+    console.log(`Inserting new message: ${newMessage}`);
+    if (!newMessage) return;
 
-    this.storeMessages();
+    newMessage.id = '';
+
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    this.http
+      .post<{ message: string; document: Message }>(
+        'http://localhost:3000/messages',
+        newMessage,
+        { headers: headers }
+      )
+      .subscribe((responseData) => {
+        this.messages.push(responseData.document);
+        // this.sortAndSend();
+      });
   }
 }
