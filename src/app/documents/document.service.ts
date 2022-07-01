@@ -3,7 +3,6 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { Document } from './document.model';
-import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
 
 @Injectable({
   providedIn: 'root',
@@ -14,16 +13,13 @@ export class DocumentService {
   documents: Document[] = [];
   maxDocumentId: number;
 
-  constructor(private http: HttpClient) {
-    this.documents = MOCKDOCUMENTS;
-    // this.maxDocumentId = this.getMaxId();
-  }
+  constructor(private http: HttpClient) {}
 
   getDocuments() {
     this.http.get<Document[]>('http://localhost:3000/documents').subscribe(
       (documents: Document[]) => {
         this.documents = documents;
-        // this.maxDocumentId = this.getMaxId();
+
         this.documents.sort((a, b) =>
           a.name > b.name ? 1 : a.name < b.name ? -1 : 0
         );
@@ -65,23 +61,8 @@ export class DocumentService {
       .delete('http://localhost:3000/documents/' + document.id)
       .subscribe((response: Response) => {
         this.documents.splice(pos, 1);
-        // this.sortAndSend();
       });
   }
-
-  // getMaxId(): number {
-  //   let maxId = 0;
-
-  //   this.documents.forEach((document) => {
-  //     const currentId = +document.id;
-
-  //     if (currentId > maxId) {
-  //       maxId = currentId;
-  //     }
-  //   });
-
-  //   return maxId;
-  // }
 
   addDocument(newDocument: Document) {
     if (!newDocument) return;
@@ -111,7 +92,6 @@ export class DocumentService {
     if (position < 0) return;
 
     newDocument.id = originalDocument.id;
-    // newDocument._id = originalDocument._id;
 
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
@@ -123,7 +103,6 @@ export class DocumentService {
       )
       .subscribe((response: Response) => {
         this.documents[position] = newDocument;
-        // this.sortAndSend();
       });
   }
 }

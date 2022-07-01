@@ -15,29 +15,25 @@ export class ContactService {
   maxContactId: number;
 
   constructor(private http: HttpClient) {
-    this.contacts = MOCKCONTACTS;
-    // this.maxContactId = this.getMaxId();
+    // this.contacts = MOCKCONTACTS;
   }
 
   getContacts() {
-    this.http
-      .get<Contact[]>(
-        'https://cms-angular-2f945-default-rtdb.firebaseio.com/contacts.json'
-      )
-      .subscribe(
-        (contacts: Contact[]) => {
-          this.contacts = contacts;
-          // this.maxContactId = this.getMaxId();
+    this.http.get<Contact[]>('http://localhost:3000/contacts').subscribe(
+      (contacts: Contact[]) => {
+        console.log(contacts);
 
-          this.contacts.sort((a, b) =>
-            a.name > b.name ? 1 : a.name < b.name ? -1 : 0
-          );
-          this.contactChangedEvent.next(this.contacts.slice());
-        },
-        (error: any) => {
-          console.log(error);
-        }
-      );
+        this.contacts = contacts;
+
+        this.contacts.sort((a, b) =>
+          a.name > b.name ? 1 : a.name < b.name ? -1 : 0
+        );
+        this.contactChangedEvent.next(this.contacts.slice());
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
   }
 
   storeContacts() {
@@ -72,20 +68,6 @@ export class ContactService {
     this.contacts.splice(position, 1);
     this.storeContacts();
   }
-
-  // getMaxId(): number {
-  //   let maxId = 0;
-
-  //   this.contacts.forEach((document) => {
-  //     const currentId = +document.id;
-
-  //     if (currentId > maxId) {
-  //       maxId = currentId;
-  //     }
-  //   });
-
-  //   return maxId;
-  // }
 
   addContact(newContact: Contact) {
     if (!newContact) return;

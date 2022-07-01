@@ -9,10 +9,7 @@ router.get("/", (req, res, next) => {
     .populate("group")
     .then((contacts) => {
       console.log(contacts);
-      res.status(200).json({
-        message: "Contacts fetched successfully!",
-        contacts: contacts,
-      });
+      res.status(200).json(contacts);
     })
     .catch((error) => {
       res.status(500).json({
