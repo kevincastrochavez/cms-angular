@@ -16,14 +16,14 @@ export class DocumentService {
 
   constructor(private http: HttpClient) {
     this.documents = MOCKDOCUMENTS;
-    this.maxDocumentId = this.getMaxId();
+    // this.maxDocumentId = this.getMaxId();
   }
 
   getDocuments() {
     this.http.get<Document[]>('http://localhost:3000/documents').subscribe(
       (documents: Document[]) => {
         this.documents = documents;
-        this.maxDocumentId = this.getMaxId();
+        // this.maxDocumentId = this.getMaxId();
         this.documents.sort((a, b) =>
           a.name > b.name ? 1 : a.name < b.name ? -1 : 0
         );
@@ -69,19 +69,19 @@ export class DocumentService {
       });
   }
 
-  getMaxId(): number {
-    let maxId = 0;
+  // getMaxId(): number {
+  //   let maxId = 0;
 
-    this.documents.forEach((document) => {
-      const currentId = +document.id;
+  //   this.documents.forEach((document) => {
+  //     const currentId = +document.id;
 
-      if (currentId > maxId) {
-        maxId = currentId;
-      }
-    });
+  //     if (currentId > maxId) {
+  //       maxId = currentId;
+  //     }
+  //   });
 
-    return maxId;
-  }
+  //   return maxId;
+  // }
 
   addDocument(newDocument: Document) {
     if (!newDocument) return;

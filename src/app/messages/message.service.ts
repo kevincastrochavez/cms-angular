@@ -14,29 +14,29 @@ export class MessageService {
 
   constructor(private http: HttpClient) {
     this.messages = MOCKMESSAGES;
-    this.maxMessageId = this.getMaxId();
+    // this.maxMessageId = this.getMaxId();
   }
 
-  getMaxId(): number {
-    let maxId = 0;
+  // getMaxId(): number {
+  //   let maxId = 0;
 
-    this.messages.forEach((message) => {
-      const currentId = +message.id;
+  //   this.messages.forEach((message) => {
+  //     const currentId = +message.id;
 
-      if (currentId > maxId) {
-        maxId = currentId;
-      }
-    });
+  //     if (currentId > maxId) {
+  //       maxId = currentId;
+  //     }
+  //   });
 
-    return maxId;
-  }
+  //   return maxId;
+  // }
 
   getMessages() {
     this.http.get<Message[]>('http://localhost:3000/messages').subscribe(
       (messages: Message[]) => {
         this.messages = messages;
 
-        this.maxMessageId = this.getMaxId();
+        // this.maxMessageId = this.getMaxId();
         this.messageChangedEvent.next(this.messages.slice());
       },
       (error: any) => {

@@ -16,7 +16,7 @@ export class ContactService {
 
   constructor(private http: HttpClient) {
     this.contacts = MOCKCONTACTS;
-    this.maxContactId = this.getMaxId();
+    // this.maxContactId = this.getMaxId();
   }
 
   getContacts() {
@@ -27,7 +27,7 @@ export class ContactService {
       .subscribe(
         (contacts: Contact[]) => {
           this.contacts = contacts;
-          this.maxContactId = this.getMaxId();
+          // this.maxContactId = this.getMaxId();
 
           this.contacts.sort((a, b) =>
             a.name > b.name ? 1 : a.name < b.name ? -1 : 0
@@ -73,19 +73,19 @@ export class ContactService {
     this.storeContacts();
   }
 
-  getMaxId(): number {
-    let maxId = 0;
+  // getMaxId(): number {
+  //   let maxId = 0;
 
-    this.contacts.forEach((document) => {
-      const currentId = +document.id;
+  //   this.contacts.forEach((document) => {
+  //     const currentId = +document.id;
 
-      if (currentId > maxId) {
-        maxId = currentId;
-      }
-    });
+  //     if (currentId > maxId) {
+  //       maxId = currentId;
+  //     }
+  //   });
 
-    return maxId;
-  }
+  //   return maxId;
+  // }
 
   addContact(newContact: Contact) {
     if (!newContact) return;
