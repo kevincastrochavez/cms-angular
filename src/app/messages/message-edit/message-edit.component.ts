@@ -27,9 +27,11 @@ export class MessageEditComponent implements OnInit {
     private messageService: MessageService,
     private http: HttpClient
   ) {
-    this.http.get<Contact>(
-      `http://localhost:3000/contacts/62bf8ab64fe011e5b27f24a0`
-    );
+    this.http
+      .get<Contact>(`http://localhost:3000/contacts/62bf8ab64fe011e5b27f24a0`)
+      .subscribe((contact: Contact) => {
+        this.currentSender = contact;
+      });
   }
 
   ngOnInit(): void {}
