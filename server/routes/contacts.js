@@ -9,7 +9,6 @@ router.get("/", (req, res, next) => {
   Contact.find()
     .populate("group")
     .then((contacts) => {
-      console.log(contacts);
       res.status(200).json(contacts);
     })
     .catch((error) => {
