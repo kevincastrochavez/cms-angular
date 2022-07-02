@@ -1,3 +1,4 @@
+const ObjectId = require("mongodb").ObjectId;
 var express = require("express");
 var router = express.Router();
 
@@ -10,6 +11,22 @@ router.get("/", (req, res, next) => {
     .then((contacts) => {
       console.log(contacts);
       res.status(200).json(contacts);
+    })
+    .catch((error) => {
+      res.status(500).json({
+        message: "An error occurred",
+        error: error,
+      });
+    });
+});
+
+router.get("/:id", (req, res, next) => {
+  const urlId = new ObjectId(req.params.id);
+
+  Contact.find({ _id: urlId })
+    .then((contact) => {
+      console.log(contact);
+      res.status(200).json(contact);
     })
     .catch((error) => {
       res.status(500).json({
