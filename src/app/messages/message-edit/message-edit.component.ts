@@ -6,6 +6,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
+
 import { Message } from '../message.model';
 import { MessageService } from '../message.service';
 
@@ -32,7 +33,8 @@ export class MessageEditComponent implements OnInit {
       '1',
       subjectInput,
       msgTextInput,
-      this.currentSender
+      this.currentSender,
+      null
     );
 
     this.messageService.addMessage(newMsg);

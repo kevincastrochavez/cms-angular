@@ -22,7 +22,7 @@ router.get("/", (req, res, next) => {
 router.get("/:id", (req, res, next) => {
   const urlId = new ObjectId(req.params.id);
 
-  Contact.find({ _id: urlId })
+  Contact.findOne({ _id: urlId })
     .then((contact) => {
       console.log(contact);
       res.status(200).json(contact);

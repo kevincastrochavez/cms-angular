@@ -14,14 +14,12 @@ export class ContactService {
   maxContactId: number;
 
   constructor(private http: HttpClient) {
-    // this.contacts = MOCKCONTACTS;
+    this.getContacts();
   }
 
   getContacts() {
     this.http.get<Contact[]>('http://localhost:3000/contacts').subscribe(
       (contacts: Contact[]) => {
-        console.log(contacts);
-
         this.contacts = contacts;
 
         this.contacts.sort((a, b) =>

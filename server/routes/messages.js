@@ -6,8 +6,8 @@ const Message = require("../models/message");
 
 router.get("/", (req, res, next) => {
   Message.find()
+    .populate("sender")
     .then((messages) => {
-      console.log(messages);
       res.status(200).json(messages);
     })
     .catch((error) => {
