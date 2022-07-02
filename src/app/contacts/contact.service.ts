@@ -49,7 +49,7 @@ export class ContactService {
   }
 
   getContact(id: string) {
-    return this.contacts.find((contact) => contact.id === id);
+    return this.http.get<Contact>(`http://localhost:3000/contacts/${id}`);
   }
 
   deleteContact(contact: Contact) {

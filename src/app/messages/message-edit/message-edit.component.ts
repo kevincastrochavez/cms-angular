@@ -6,7 +6,9 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
+import { Contact } from 'src/app/contacts/contact.model';
 import { Message } from '../message.model';
 import { MessageService } from '../message.service';
 
@@ -19,9 +21,16 @@ export class MessageEditComponent implements OnInit {
   @ViewChild('subject') subject!: ElementRef;
   @ViewChild('msgText') msgText!: ElementRef;
   @Output() addMessageEvent = new EventEmitter<Message>();
-  currentSender = '1';
+  currentSender: Contact;
 
-  constructor(private messageService: MessageService) {}
+  constructor(
+    private messageService: MessageService,
+    private http: HttpClient
+  ) {
+    this.http.get<Contact>(
+      `http://localhost:3000/contacts/62bf8ab64fe011e5b27f24a0`
+    );
+  }
 
   ngOnInit(): void {}
 

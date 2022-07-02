@@ -24,7 +24,6 @@ router.get("/:id", (req, res, next) => {
 
   Contact.findOne({ _id: urlId })
     .then((contact) => {
-      console.log(contact);
       res.status(200).json(contact);
     })
     .catch((error) => {
