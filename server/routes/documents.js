@@ -21,7 +21,7 @@ router.get("/", (req, res, next) => {
 router.get("/:id", (req, res, next) => {
   const urlId = new ObjectId(req.params.id);
 
-  Document.find({ _id: urlId })
+  Document.findOne({ _id: urlId })
     .then((document) => {
       res.status(200).json(document);
     })

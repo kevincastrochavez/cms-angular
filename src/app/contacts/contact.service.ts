@@ -33,21 +33,6 @@ export class ContactService {
     );
   }
 
-  storeContacts() {
-    const contacts = JSON.stringify(this.contacts);
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-
-    this.http
-      .put(
-        'https://cms-angular-2f945-default-rtdb.firebaseio.com/contacts.json',
-        contacts,
-        { headers: headers }
-      )
-      .subscribe(() => {
-        this.contactChangedEvent.next(this.contacts.slice());
-      });
-  }
-
   getContact(id: string) {
     return this.http.get<Contact>(`http://localhost:3000/contacts/${id}`);
   }
@@ -63,7 +48,6 @@ export class ContactService {
     }
 
     this.contacts.splice(position, 1);
-    this.storeContacts();
   }
 
   addContact(newContact: Contact) {
@@ -72,8 +56,6 @@ export class ContactService {
     this.maxContactId++;
     newContact.id = String(this.maxContactId);
     this.contacts.push(newContact);
-
-    this.storeContacts();
   }
 
   updateContact(originalContact: Contact, newContact: Contact) {
@@ -85,7 +67,5 @@ export class ContactService {
 
     newContact.id = originalContact.id;
     this.contacts[position] = newContact;
-
-    this.storeContacts();
   }
 }
