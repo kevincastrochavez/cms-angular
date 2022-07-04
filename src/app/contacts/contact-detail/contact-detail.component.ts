@@ -12,7 +12,7 @@ import { ContactService } from '../contact.service';
 export class ContactDetailComponent implements OnInit {
   @Input() contact: Contact;
   id: string;
-  groupContacts: Contact[];
+  // groupContacts: Contact[];
 
   constructor(
     private contactService: ContactService,
@@ -25,9 +25,13 @@ export class ContactDetailComponent implements OnInit {
       this.id = params['id'];
       this.contactService.getContact(this.id).subscribe((contact: Contact) => {
         this.contact = contact;
-      });
 
-      this.groupContacts = this.contact.group;
+        this.contact.group.map((contact) => {
+          // this.contactService
+          //   .getContact(contact)
+          console.log(this.contact.group);
+        });
+      });
     });
   }
 

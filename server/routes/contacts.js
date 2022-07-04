@@ -37,7 +37,7 @@ router.get("/:id", (req, res, next) => {
 router.post("/", (req, res, next) => {
   const maxContactId = sequenceGenerator.nextId("contacts");
 
-  const contact = new contact({
+  const contact = new Contact({
     id: maxContactId,
     name: req.body.name,
     email: req.body.email,

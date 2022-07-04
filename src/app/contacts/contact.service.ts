@@ -53,9 +53,19 @@ export class ContactService {
   addContact(newContact: Contact) {
     if (!newContact) return;
 
-    this.maxContactId++;
-    newContact.id = String(this.maxContactId);
-    this.contacts.push(newContact);
+    newContact.id = '';
+
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    this.http
+      .post<{ message: string; document: Contact }>(
+        'http://localhost:3000/contacts',
+        newContact,
+        { headers: headers }
+      )
+      .subscribe((responseData) => {
+        this.contacts.push(responseData.document);
+      });
   }
 
   updateContact(originalContact: Contact, newContact: Contact) {
