@@ -21,7 +21,6 @@ export class MessageItemComponent implements OnInit {
       .getContact(this.message.sender._id)
       .subscribe((contact: Contact) => {
         this.contact = contact;
-        console.log(contact);
 
         this.messageSender = this.contact.name;
       });

@@ -35,6 +35,14 @@ export class ContactEditComponent implements OnInit {
 
       this.contactService.getContact(this.id).subscribe((contact: Contact) => {
         this.originalContact = contact;
+
+        this.originalContact.group.map((contact) => {
+          this.contactService
+            .getContact(contact)
+            .subscribe((contact: Contact) => {
+              this.groupContacts.push(contact);
+            });
+        });
       });
 
       if (!this.originalContact) {
@@ -42,17 +50,13 @@ export class ContactEditComponent implements OnInit {
       }
       this.editMode = true;
       this.contact = JSON.parse(JSON.stringify(this.originalContact));
-
-      if (this.groupContacts.length > 0) {
-        this.groupContacts = JSON.parse(
-          JSON.stringify(this.originalContact.group)
-        );
-      }
     });
   }
 
   onSubmit(form: NgForm) {
     const value = form.value;
+    const stringArray = this.groupContacts.map((contact) => contact._id);
+
     const newContact = new Contact(
       null,
       value.id,
@@ -60,7 +64,7 @@ export class ContactEditComponent implements OnInit {
       value.email,
       value.phone,
       value.imageUrl,
-      this.groupContacts
+      stringArray
     );
 
     if (this.editMode) {

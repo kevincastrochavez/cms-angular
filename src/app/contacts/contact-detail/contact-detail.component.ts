@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { Contact } from '../contact.model';
 import { ContactService } from '../contact.service';
@@ -12,7 +13,7 @@ import { ContactService } from '../contact.service';
 export class ContactDetailComponent implements OnInit {
   @Input() contact: Contact;
   id: string;
-  // groupContacts: Contact[];
+  groupContacts: Contact[] = [];
 
   constructor(
     private contactService: ContactService,
@@ -23,14 +24,19 @@ export class ContactDetailComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       this.id = params['id'];
+
       this.contactService.getContact(this.id).subscribe((contact: Contact) => {
         this.contact = contact;
 
-        this.contact.group.map((contact) => {
-          // this.contactService
-          //   .getContact(contact)
-          console.log(this.contact.group);
-        });
+        if (contact.group != null) {
+          this.contact.group.map((contact) => {
+            this.contactService
+              .getContact(contact)
+              .subscribe((contact: Contact) => {
+                this.groupContacts.push(contact);
+              });
+          });
+        }
       });
     });
   }
