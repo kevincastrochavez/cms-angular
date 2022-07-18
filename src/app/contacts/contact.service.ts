@@ -38,16 +38,14 @@ export class ContactService {
   }
 
   deleteContact(contact: Contact) {
-    if (!contact) {
-      return;
-    }
+    const position = this.contacts.findIndex((c) => c.id === contact.id);
 
-    const position = this.contacts.indexOf(contact);
-    if (position < 0) {
-      return;
-    }
-
-    this.contacts.splice(position, 1);
+    // this.contacts.splice(position, 1);
+    return this.http
+      .delete(`http://localhost:3000/contacts/${contact.id}`)
+      .subscribe((response) => {
+        this.contacts.splice(position, 1);
+      });
   }
 
   addContact(newContact: Contact) {

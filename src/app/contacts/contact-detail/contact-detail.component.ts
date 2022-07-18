@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -10,10 +10,11 @@ import { ContactService } from '../contact.service';
   templateUrl: './contact-detail.component.html',
   styleUrls: ['./contact-detail.component.css'],
 })
-export class ContactDetailComponent implements OnInit {
+export class ContactDetailComponent implements OnInit, OnDestroy {
   @Input() contact: Contact;
   id: string;
   groupContacts: Contact[] = [];
+  subscription: Subscription;
 
   constructor(
     private contactService: ContactService,
@@ -22,23 +23,31 @@ export class ContactDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.groupContacts = [];
     this.route.params.subscribe((params: Params) => {
       this.id = params['id'];
 
-      this.contactService.getContact(this.id).subscribe((contact: Contact) => {
-        this.contact = contact;
+      this.subscription = this.contactService
+        .getContact(this.id)
+        .subscribe((contact: Contact) => {
+          this.contact = contact;
 
-        if (contact.group != null) {
-          this.contact.group.map((contact) => {
-            this.contactService
-              .getContact(contact)
-              .subscribe((contact: Contact) => {
-                this.groupContacts.push(contact);
-              });
-          });
-        }
-      });
+          if (contact.group != null) {
+            this.contact.group.map((contact) => {
+              this.contactService
+                .getContact(contact)
+                .subscribe((contact: Contact) => {
+                  this.groupContacts.push(contact);
+                });
+            });
+          }
+        });
     });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+    this.groupContacts = [];
   }
 
   onDelete() {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
@@ -11,6 +11,7 @@ import { ContactService } from '../contact.service';
   styleUrls: ['./contact-edit.component.css'],
 })
 export class ContactEditComponent implements OnInit {
+  @ViewChild('f') form: NgForm;
   invalidContact: boolean = false;
   groupContacts: Contact[] = [];
   originalContact: Contact;
@@ -36,13 +37,23 @@ export class ContactEditComponent implements OnInit {
       this.contactService.getContact(this.id).subscribe((contact: Contact) => {
         this.originalContact = contact;
 
-        this.originalContact.group.map((contact) => {
-          this.contactService
-            .getContact(contact)
-            .subscribe((contact: Contact) => {
-              this.groupContacts.push(contact);
-            });
+        this.form.setValue({
+          name: this.originalContact.name,
+          email: this.originalContact.email,
+          phone: this.originalContact.phone,
+          imageUrl: this.originalContact.imageUrl,
+          group: this.originalContact.group,
         });
+
+        if (this.originalContact.group) {
+          this.originalContact.group.map((contact) => {
+            this.contactService
+              .getContact(contact)
+              .subscribe((contact: Contact) => {
+                this.groupContacts.push(contact);
+              });
+          });
+        }
       });
 
       if (!this.originalContact) {
