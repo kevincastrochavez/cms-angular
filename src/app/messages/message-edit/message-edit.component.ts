@@ -28,7 +28,7 @@ export class MessageEditComponent implements OnInit {
     private http: HttpClient
   ) {
     this.http
-      .get<Contact>(`http://localhost:3000/contacts/62bf8ab64fe011e5b27f24a0`)
+      .get<Contact>(`http://localhost:3000/contacts/62d56b826b03bd8f99e2ac97`)
       .subscribe((contact: Contact) => {
         this.currentSender = contact;
       });

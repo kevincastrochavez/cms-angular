@@ -32,6 +32,8 @@ export class ContactDetailComponent implements OnInit, OnDestroy {
         .subscribe((contact: Contact) => {
           this.contact = contact;
 
+          console.log(this.contact);
+
           if (contact.group != null) {
             this.contact.group.map((contact) => {
               this.contactService

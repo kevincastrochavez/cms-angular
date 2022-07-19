@@ -59,6 +59,7 @@ export class ContactEditComponent implements OnInit {
       if (!this.originalContact) {
         return;
       }
+
       this.editMode = true;
       this.contact = JSON.parse(JSON.stringify(this.originalContact));
     });
@@ -79,8 +80,10 @@ export class ContactEditComponent implements OnInit {
     );
 
     if (this.editMode) {
+      console.log(this.editMode);
       this.contactService.updateContact(this.originalContact, newContact);
     } else {
+      console.log(this.editMode);
       this.contactService.addContact(newContact);
     }
 
